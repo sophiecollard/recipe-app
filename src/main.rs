@@ -1,31 +1,70 @@
+use std::fmt;
 use std::io;
 
 fn main() {
     println!("Welcome to the Recipe App!");
 
-    let choice: u32 = prompt_for_option();
+    let action: Action = prompt_for_action();
 
-    println!("You chose option: {}", choice);
+    println!("You chose to {}", action);
+
+    match action {
+        Action::ListRecipesForIngredient => list_recipes(),
+        Action::UpdateIngredients => update_ingredients(),
+        Action::UpdateRecipes => update_recipes(),
+    }
 }
 
-fn prompt_for_option() -> u32 {
+fn prompt_for_action() -> Action {
     loop {
-        println!("Please select one of the following options:");
+        println!("Please enter a number between 1 and 3 to choose from the following options:");
         println!("[1] List recipes for an ingredient");
         println!("[2] Update ingredients list");
         println!("[3] Update recipes");
 
-        let mut choice = String::new();
+        let mut action = String::new();
 
         io::stdin()
-            .read_line(&mut choice)
+            .read_line(&mut action)
             .expect("Failed to read line");
 
-        let choice: u32 = match choice.trim().parse() {
-            Ok(num) => num,
-            Err(_)  => continue,
+        let action: Action = match action.trim().parse() {
+            Ok(1) => Action::ListRecipesForIngredient,
+            Ok(2) => Action::UpdateIngredients,
+            Ok(3) => Action::UpdateRecipes,
+            Ok(_) | Err(_) => continue,
         };
 
-        return choice;
+        return action;
+    }
+}
+
+fn list_recipes() {
+    println!("Not implemented!");
+}
+
+fn update_ingredients() {
+    println!("Not implemented!");
+}
+
+fn update_recipes() {
+    println!("Not implemented!");
+}
+
+enum Action {
+    ListRecipesForIngredient,
+    UpdateIngredients,
+    UpdateRecipes,
+}
+
+impl fmt::Display for Action {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let s: String = match self {
+            Action::ListRecipesForIngredient => String::from("list recipes for an ingredient"),
+            Action::UpdateIngredients => String::from("update ingredients"),
+            Action::UpdateRecipes => String::from("update recipes"),
+        };
+
+        write!(f, "{}", s)
     }
 }
