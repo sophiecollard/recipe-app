@@ -1,5 +1,7 @@
 mod action;
 
+use crate::action::Action;
+
 fn main() {
     println!("Welcome to the Recipe App!");
 
@@ -8,9 +10,9 @@ fn main() {
     println!("You chose to {}", a);
 
     match a {
-        action::Action::ListRecipesForIngredient => list_recipes(),
-        action::Action::UpdateIngredients => update_ingredients(),
-        action::Action::UpdateRecipes => update_recipes(),
+        Action::ListRecipesForIngredient => list_recipes(),
+        Action::UpdateIngredients => update_ingredients(),
+        Action::UpdateRecipes => update_recipes(),
     }
 }
 
