@@ -1,9 +1,13 @@
 mod action;
+mod ingredient;
 
 use crate::action::Action;
+use crate::ingredient::Ingredient;
 
 fn main() {
     println!("Welcome to the Recipe App!");
+
+    let mut ingredients: Vec<Ingredient> = Vec::new();
 
     let a = action::prompt_for_action();
 
