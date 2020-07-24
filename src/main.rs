@@ -1,41 +1,16 @@
-use std::fmt;
-use std::io;
+mod action;
 
 fn main() {
     println!("Welcome to the Recipe App!");
 
-    let action: Action = prompt_for_action();
+    let a = action::prompt_for_action();
 
-    println!("You chose to {}", action);
+    println!("You chose to {}", a);
 
-    match action {
-        Action::ListRecipesForIngredient => list_recipes(),
-        Action::UpdateIngredients => update_ingredients(),
-        Action::UpdateRecipes => update_recipes(),
-    }
-}
-
-fn prompt_for_action() -> Action {
-    loop {
-        println!("Please enter a number between 1 and 3 to choose from the following options:");
-        println!("[1] List recipes for an ingredient");
-        println!("[2] Update ingredients list");
-        println!("[3] Update recipes");
-
-        let mut action = String::new();
-
-        io::stdin()
-            .read_line(&mut action)
-            .expect("Failed to read line");
-
-        let action: Action = match action.trim().parse() {
-            Ok(1) => Action::ListRecipesForIngredient,
-            Ok(2) => Action::UpdateIngredients,
-            Ok(3) => Action::UpdateRecipes,
-            Ok(_) | Err(_) => continue,
-        };
-
-        return action;
+    match a {
+        action::Action::ListRecipesForIngredient => list_recipes(),
+        action::Action::UpdateIngredients => update_ingredients(),
+        action::Action::UpdateRecipes => update_recipes(),
     }
 }
 
@@ -49,22 +24,4 @@ fn update_ingredients() {
 
 fn update_recipes() {
     println!("Not implemented!");
-}
-
-enum Action {
-    ListRecipesForIngredient,
-    UpdateIngredients,
-    UpdateRecipes,
-}
-
-impl fmt::Display for Action {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let s: String = match self {
-            Action::ListRecipesForIngredient => String::from("list recipes for an ingredient"),
-            Action::UpdateIngredients => String::from("update ingredients"),
-            Action::UpdateRecipes => String::from("update recipes"),
-        };
-
-        write!(f, "{}", s)
-    }
 }
