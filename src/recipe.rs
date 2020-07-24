@@ -1,5 +1,7 @@
+#[path = "quantity.rs"] mod quantity;
+
 use crate::ingredient::Ingredient;
-use crate::quantity::Quantity;
+use quantity::Quantity;
 
 pub struct Recipe {
     id: u32,
